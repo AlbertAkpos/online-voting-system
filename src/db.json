@@ -1,0 +1,16 @@
+{
+  "voters": [
+    {
+      "id": 1,
+      "fullName": "Alberto Akpos",
+      "isAdmin": true,
+      "password": "megaman"
+    }
+  ],
+  "candidates": [
+    {
+      "candidateID": 1,
+      "party": "PDP"
+    }
+  ]
+}

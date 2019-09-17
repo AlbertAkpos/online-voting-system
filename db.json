@@ -1,0 +1,16 @@
+{
+  "voters": [
+    {
+      "id": 1,
+      "firstName": "Herbert",
+      "lastName": "Nigeria"
+    }
+  ],
+  "candidates": [
+    {
+      "id": 1,
+      "body": "some comment",
+      "postId": 1
+    }
+  ]
+}
