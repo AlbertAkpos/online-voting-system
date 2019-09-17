@@ -1,15 +1,19 @@
 import React from "react";
 import "./App.css";
 import Home from "./components/Home";
+import { Provider } from "react-redux";
+import store from "./store";
 
 import { Route, Switch } from "react-router-dom";
-import Voters from "./Layouts/Voters";
+import Dashboard from "./Layouts/Dashboard";
 function App() {
   return (
-    <>
-      <Route exact path='/' component={Home} />
-      <Route exact path='/voters' component={Voters} />
-    </>
+    <Provider store={store}>
+      <>
+        <Route exact path='/' component={Home} />
+        <Route exact path='/dashboard' component={Dashboard} />
+      </>
+    </Provider>
   );
 }
 

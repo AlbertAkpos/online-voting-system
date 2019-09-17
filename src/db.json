@@ -2,7 +2,7 @@
   "voters": [
     {
       "id": 1,
-      "fullName": "Alberto Akpos",
+      "name": "Alberto Akpos",
       "isAdmin": true,
       "password": "megaman"
     }

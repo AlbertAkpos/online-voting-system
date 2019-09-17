@@ -2,8 +2,73 @@
   "voters": [
     {
       "id": 1,
-      "firstName": "Herbert",
-      "lastName": "Nigeria"
+      "name": "ALBERT ADMIN",
+      "email": "albertakpos@gmail.com",
+      "password": "megamaner",
+      "isAdmin": true
+    },
+    {
+      "name": "YOUNG BOB",
+      "email": "bobyoung@gmail.com",
+      "password": "megamaner",
+      "isAdmin": false,
+      "id": 2
+    },
+    {
+      "name": "ALBERTO",
+      "email": "newwmai@gmail.com",
+      "password": "megamaner",
+      "isAdmin": false,
+      "id": 3
+    },
+    {
+      "name": "NEW GUY",
+      "email": "newemail@gmail.com",
+      "password": "megamaner",
+      "isAdmin": false,
+      "id": 4
+    },
+    {
+      "name": "ANOTHER",
+      "email": "another@gmail.com",
+      "password": "megamaenr",
+      "isAdmin": false,
+      "id": 5
+    },
+    {
+      "name": "H",
+      "email": "another@gmail.com",
+      "password": "effeere",
+      "isAdmin": false,
+      "id": 6
+    },
+    {
+      "name": "CYNTHIA UGU",
+      "email": "albertakpos@gmail.com",
+      "password": "megamaer",
+      "isAdmin": false,
+      "id": 7
+    },
+    {
+      "name": "MENA",
+      "email": "mena@gmail.com",
+      "password": "howfar",
+      "isAdmin": false,
+      "id": 8
+    },
+    {
+      "name": "NA WA",
+      "email": "newemail@gmail.com",
+      "password": "megamaern",
+      "isAdmin": false,
+      "id": 9
+    },
+    {
+      "name": "WETIN",
+      "email": "wetin@gmail.com",
+      "password": "howfar",
+      "isAdmin": false,
+      "id": 10
     }
   ],
   "candidates": [

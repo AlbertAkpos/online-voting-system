@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { connect } from "react-redux";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import {
@@ -6,64 +7,66 @@ import {
   ToastsStore,
   ToastsContainerPosition
 } from "react-toasts";
+import PropTypes from "prop-types";
+import { getVoters, addVoter } from "../actions/voterActions";
+import { Redirect } from "react-router-dom";
 
-const Register = () => {
-  const [voter, setVoter] = useState({
-    fullName: "",
-    email: "",
-    isAdmin: false,
-    password: ""
-  });
+const Register = ({ voter: { voters, loading }, getVoters, addVoter }) => {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [toDashboard, setToDashboard] = useState(false);
+  useEffect(() => {
+    getVoters();
+    // eslint-disable-next-line
+  }, []);
 
-  // useEffect(() => {
-  //   getVoters();
-  // }, []);
+  if (loading || voters === null) {
+    return <h2>Its Loading...</h2>;
+  }
 
-  // const getVoters = async () => {
-  //   setLoading(true);
-  //   const res = await fetch("http://localhost:5000/voters");
-  //   const data = await res.json();
-
-  //   console.log(data);
-  // };
-
-  const getNewVoter = async e => {
+  if (toDashboard) {
+    return (
+      <Redirect
+        to={{
+          pathname: "/dashboard",
+          state: { name, email, password, isAdmin }
+        }}
+      />
+    );
+  }
+  const onSubmit = e => {
     e.preventDefault();
-    // const res = await fetch("http://localhost:5000/voters");
-    // const data = await res.json();
-    if (
-      voter.firstName === "" ||
-      voter.lastName === "" ||
-      voter.email === "" ||
-      voter.password === ""
-    ) {
+    if (name === "" || email === "" || password === "") {
       ToastsStore.error("Please fill in all fields");
     } else {
-      setVoter({
-        ...voter,
-        [e.target.name]: e.target.value
-      });
+      let find = voters.find(x => x.name === name);
+      if (find) {
+        ToastsStore.warning("name or email already exist");
+      } else {
+        addVoter({
+          name,
+          email,
+          password,
+          isAdmin
+        });
+        setToDashboard(true);
+      }
     }
   };
 
   return (
     <>
-      <Form onSubmit={getNewVoter}>
+      <Form onSubmit={onSubmit}>
         <Form.Group controlId='formBasicFirstName'>
-          <Form.Label>First name</Form.Label>
+          <Form.Label>Full name</Form.Label>
           <Form.Control
-            type='firstName'
-            placeholder='Enter first name'
-            onChange={getNewVoter}
-          />
-        </Form.Group>
-
-        <Form.Group controlId='formBasicLastName'>
-          <Form.Label>Last name</Form.Label>
-          <Form.Control
-            type='first-name'
-            placeholder='Enter last name'
-            onChange={getNewVoter}
+            type='text'
+            name='name'
+            value={name}
+            placeholder='Enter full name'
+            onChange={e => setName(e.target.value.toUpperCase())}
           />
         </Form.Group>
 
@@ -71,8 +74,10 @@ const Register = () => {
           <Form.Label>Email address</Form.Label>
           <Form.Control
             type='email'
+            name='email'
+            value={email}
             placeholder='Enter email'
-            onChange={getNewVoter}
+            onChange={e => setEmail(e.target.value.toLowerCase())}
           />
           <Form.Text className='text-muted'>
             We'll never share your email with anyone else.
@@ -82,8 +87,10 @@ const Register = () => {
           <Form.Label>Password</Form.Label>
           <Form.Control
             type='password'
+            name='password'
+            value={password}
             placeholder='Password'
-            onChange={getNewVoter}
+            onChange={e => setPassword(e.target.value)}
           />
         </Form.Group>
         <Button variant='primary' type='submit'>
@@ -98,4 +105,16 @@ const Register = () => {
   );
 };
 
-export default Register;
+Register.propTypes = {
+  voter: PropTypes.object.isRequired,
+  getVoters: PropTypes.func.isRequired,
+  addVoter: PropTypes.func.isRequired
+};
+const mapStateToProps = state => ({
+  voter: state.voter
+});
+
+export default connect(
+  mapStateToProps,
+  { getVoters, addVoter }
+)(Register);
