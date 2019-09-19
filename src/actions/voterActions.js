@@ -1,4 +1,11 @@
-import { GET_VOTERS, SET_LOADING, VOTERS_ERROR, ADD_VOTER } from "./types";
+import {
+  GET_VOTERS,
+  SET_LOADING,
+  VOTERS_ERROR,
+  ADD_VOTER,
+  GET_CANDIDATES,
+  CANDIDATES_ERROR
+} from "./types";
 
 // export const getVoters = () => {
 //   return async dispatch => {
@@ -19,13 +26,11 @@ export const getVoters = () => async dispatch => {
     setLoading();
     const res = await fetch("http://localhost:5000/voters");
     const data = await res.json();
-    console.log("data", data);
 
     dispatch({
       type: GET_VOTERS,
       payload: data
     });
-    console.log("data", data);
   } catch (err) {
     dispatch({
       type: VOTERS_ERROR,
@@ -46,13 +51,11 @@ export const addVoter = voter => async dispatch => {
       }
     });
     const data = await res.json();
-    console.log("data", data);
 
     dispatch({
       type: ADD_VOTER,
       payload: data
     });
-    console.log("data", data);
   } catch (err) {
     dispatch({
       type: VOTERS_ERROR,
@@ -60,6 +63,27 @@ export const addVoter = voter => async dispatch => {
     });
   }
 };
+
+//Get Candidates
+export const getCandidates = () => async dispatch => {
+  console.log("frm candidates");
+  try {
+    setLoading();
+    const res = await fetch("http://localhost:5000/candidates");
+    const data = await res.json();
+
+    dispatch({
+      type: GET_CANDIDATES,
+      payload: data
+    });
+  } catch (err) {
+    dispatch({
+      type: CANDIDATES_ERROR,
+      payload: err.response.data
+    });
+  }
+};
+
 //SET LOADING TO TRUE
 export const setLoading = () => {
   return {

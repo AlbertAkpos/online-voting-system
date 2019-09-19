@@ -12,7 +12,7 @@ import {
 } from "react-toasts";
 
 const Login = ({ voter: { voters, loading }, getVoters }) => {
-  const [name, setName] = useState("");
+  const [voter, setVoter] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isAdmin, setIsAdmin] = useState(false);
@@ -22,7 +22,7 @@ const Login = ({ voter: { voters, loading }, getVoters }) => {
     // eslint-disable-next-line
   }, []);
 
-  const onSubmit = e => {
+  const formSubmit = e => {
     e.preventDefault();
     if (email === "" || password === "") {
       ToastsStore.error("Please fill in all fields");
@@ -30,7 +30,7 @@ const Login = ({ voter: { voters, loading }, getVoters }) => {
       let find = voters.find(x => x.email === email);
       if (find) {
         if (find.password === password) {
-          setName(find.name);
+          setVoter(find);
           setIsAdmin(find.isAdmin);
           setToDashboard(true);
         } else {
@@ -45,19 +45,30 @@ const Login = ({ voter: { voters, loading }, getVoters }) => {
   };
 
   if (toDashboard) {
-    return (
-      <Redirect
-        to={{
-          pathname: "/dashboard",
-          state: { name, email, password, isAdmin }
-        }}
-      />
-    );
+    if (isAdmin) {
+      return (
+        <Redirect
+          to={{
+            pathname: "/admin",
+            state: voter
+          }}
+        />
+      );
+    } else {
+      return (
+        <Redirect
+          to={{
+            pathname: "/dashboard",
+            state: voter
+          }}
+        />
+      );
+    }
   }
 
   return (
     <>
-      <Form onSubmit={onSubmit}>
+      <Form onSubmit={formSubmit}>
         <Form.Group controlId='formBasicEmail'>
           <Form.Label>Email address</Form.Label>
           <Form.Control

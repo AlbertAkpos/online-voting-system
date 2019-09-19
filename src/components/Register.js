@@ -16,6 +16,7 @@ const Register = ({ voter: { voters, loading }, getVoters, addVoter }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isAdmin, setIsAdmin] = useState(false);
+  const [voted, setVoted] = useState(false);
   const [toDashboard, setToDashboard] = useState(false);
   useEffect(() => {
     getVoters();
@@ -31,7 +32,7 @@ const Register = ({ voter: { voters, loading }, getVoters, addVoter }) => {
       <Redirect
         to={{
           pathname: "/dashboard",
-          state: { name, email, password, isAdmin }
+          state: { name, email, password, isAdmin, voted }
         }}
       />
     );
@@ -49,7 +50,8 @@ const Register = ({ voter: { voters, loading }, getVoters, addVoter }) => {
           name,
           email,
           password,
-          isAdmin
+          isAdmin,
+          voted
         });
         setToDashboard(true);
       }

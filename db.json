@@ -5,77 +5,102 @@
       "name": "ALBERT ADMIN",
       "email": "albertakpos@gmail.com",
       "password": "megamaner",
-      "isAdmin": true
+      "isAdmin": true,
+      "voted": false
     },
     {
       "name": "YOUNG BOB",
       "email": "bobyoung@gmail.com",
       "password": "megamaner",
       "isAdmin": false,
-      "id": 2
+      "id": 2,
+      "voted": false
     },
     {
       "name": "ALBERTO",
       "email": "newwmai@gmail.com",
       "password": "megamaner",
       "isAdmin": false,
-      "id": 3
+      "id": 3,
+      "voted": false
     },
     {
       "name": "NEW GUY",
       "email": "newemail@gmail.com",
       "password": "megamaner",
       "isAdmin": false,
-      "id": 4
+      "id": 4,
+      "voted": false
     },
     {
       "name": "ANOTHER",
       "email": "another@gmail.com",
       "password": "megamaenr",
       "isAdmin": false,
-      "id": 5
+      "id": 5,
+      "voted": true
     },
     {
       "name": "H",
       "email": "another@gmail.com",
       "password": "effeere",
       "isAdmin": false,
-      "id": 6
+      "id": 6,
+      "voted": false
     },
     {
       "name": "CYNTHIA UGU",
       "email": "albertakpos@gmail.com",
       "password": "megamaer",
       "isAdmin": false,
-      "id": 7
+      "id": 7,
+      "voted": false
     },
     {
       "name": "MENA",
       "email": "mena@gmail.com",
       "password": "howfar",
       "isAdmin": false,
-      "id": 8
+      "id": 8,
+      "voted": false
     },
     {
       "name": "NA WA",
       "email": "newemail@gmail.com",
       "password": "megamaern",
       "isAdmin": false,
-      "id": 9
+      "id": 9,
+      "voted": false
     },
     {
       "name": "WETIN",
       "email": "wetin@gmail.com",
       "password": "howfar",
       "isAdmin": false,
-      "id": 10
+      "id": 10,
+      "voted": false
+    },
+    {
+      "name": "SENIOR ADMIN",
+      "email": "decagon@gmail.com",
+      "password": "1234",
+      "isAdmin": true,
+      "id": 11,
+      "voted": false
     }
   ],
   "candidates": [
     {
       "id": 1,
-      "body": "some comment",
-      "postId": 1
+      "party": "AC",
+      "name": "MUHAMADU BUHARI",
+      "votes": 2
+    },
+    {
+      "id": 2,
+      "party": "DSDS",
+      "name": "DSDS",
+      "votes": 0
     }
   ]
 }
