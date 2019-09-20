@@ -13,7 +13,7 @@ import {
 
 const Login = ({ voter: { voters, loading }, getVoters }) => {
   const [voter, setVoter] = useState("");
-  const [email, setEmail] = useState("");
+  const [voterID, setVoterID] = useState("");
   const [password, setPassword] = useState("");
   const [isAdmin, setIsAdmin] = useState(false);
   const [toDashboard, setToDashboard] = useState(false);
@@ -22,64 +22,54 @@ const Login = ({ voter: { voters, loading }, getVoters }) => {
     // eslint-disable-next-line
   }, []);
 
-  const formSubmit = e => {
+  const formSubmit = async e => {
     e.preventDefault();
-    if (email === "" || password === "") {
+    const res = await fetch("http://localhost:5000/voters");
+    const data = await res.json();
+    if (voterID === "" || password === "") {
       ToastsStore.error("Please fill in all fields");
     } else {
-      let find = voters.find(x => x.email === email);
+      let find = data.find(x => x.id == voterID);
       if (find) {
+        console.log(find);
         if (find.password === password) {
           setVoter(find);
           setIsAdmin(find.isAdmin);
           setToDashboard(true);
         } else {
           ToastsStore.warning(
-            "Email and password does't match. Please register if you have'nt."
+            "Voter's ID and password does't match. Please register if you have'nt."
           );
         }
       } else {
-        ToastsStore.warning("Email is not registered yet. Please register");
+        ToastsStore.warning("Voter is not registered yet. Please register");
       }
     }
   };
 
   if (toDashboard) {
-    if (isAdmin) {
-      return (
-        <Redirect
-          to={{
-            pathname: "/admin",
-            state: voter
-          }}
-        />
-      );
-    } else {
-      return (
-        <Redirect
-          to={{
-            pathname: "/dashboard",
-            state: voter
-          }}
-        />
-      );
-    }
+    return (
+      <Redirect
+        to={{
+          pathname: "/dashboard",
+          state: voter
+        }}
+      />
+    );
   }
 
   return (
     <>
+      <h3>Login</h3>
       <Form onSubmit={formSubmit}>
         <Form.Group controlId='formBasicEmail'>
-          <Form.Label>Email address</Form.Label>
+          <Form.Label>Voter's ID</Form.Label>
           <Form.Control
-            type='email'
-            placeholder='Enter email'
-            value={email}
-            onChange={e => setEmail(e.target.value.toLowerCase())}
+            type='text'
+            placeholder='Enter Voter ID'
+            value={voterID}
+            onChange={e => setVoterID(e.target.value.toLowerCase())}
           />
-          <Form.Text className='text-muted'>
-            We'll never share your email with anyone else.
-          </Form.Text>
         </Form.Group>
         <Form.Group controlId='formBasicPassword'>
           <Form.Label>Password</Form.Label>
@@ -90,7 +80,7 @@ const Login = ({ voter: { voters, loading }, getVoters }) => {
             onChange={e => setPassword(e.target.value)}
           />
         </Form.Group>
-        <Button variant='primary' type='submit'>
+        <Button variant='primary' type='submit' className='bg-success'>
           Login
         </Button>
       </Form>

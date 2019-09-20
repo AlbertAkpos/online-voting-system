@@ -42,16 +42,23 @@ export const getVoters = () => async dispatch => {
 //Add New Voter
 export const addVoter = voter => async dispatch => {
   try {
+    let newVoter = {
+      name: voter.name,
+      email: voter.email,
+      password: voter.password,
+      isAdmin: voter.isAdmin,
+      voted: voter.voted
+    };
+    console.log(voter.id);
     setLoading();
-    const res = await fetch("http://localhost:5000/voters", {
-      method: "POST",
-      body: JSON.stringify(voter),
+    const res = await fetch(`http://localhost:5000/voters/${voter.id}`, {
+      method: "PUT",
+      body: JSON.stringify(newVoter),
       headers: {
         "Content-Type": "application/json"
       }
     });
     const data = await res.json();
-
     dispatch({
       type: ADD_VOTER,
       payload: data
@@ -66,7 +73,6 @@ export const addVoter = voter => async dispatch => {
 
 //Get Candidates
 export const getCandidates = () => async dispatch => {
-  console.log("frm candidates");
   try {
     setLoading();
     const res = await fetch("http://localhost:5000/candidates");

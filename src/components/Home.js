@@ -10,6 +10,12 @@ const Home = () => {
   return (
     <>
       <NavBar />
+      <div className='jumbotron jumbotron-fluid'>
+        <div className='container'>
+          <h1 className='display-4'>Nigeria Decides</h1>
+          <p>Register and cast your vote now!</p>
+        </div>
+      </div>
       <Container>
         <Row>
           <Col>

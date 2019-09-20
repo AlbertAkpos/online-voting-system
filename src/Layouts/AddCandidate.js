@@ -85,6 +85,8 @@ const AddCandidate = ({ submit }) => {
                     className='btn btn-primary'
                     onClick={() => {
                       submit(candidateName, candidateParty);
+                      setCandidateName("");
+                      setCandidateParty("");
                     }}
                     data-dismiss='modal'
                   >

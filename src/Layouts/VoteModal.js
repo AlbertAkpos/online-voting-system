@@ -9,7 +9,11 @@ const VoteModal = ({ voter }) => {
   const getCandidates = async () => {
     const res = await fetch("http://localhost:5000/candidates");
     const data = await res.json();
-    setCandidates(data);
+    if (data.length >= 1) {
+      setCandidates(data);
+    } else {
+      alert("No Candidates yet.");
+    }
   };
 
   const vote = async () => {
@@ -54,7 +58,7 @@ const VoteModal = ({ voter }) => {
       {/* <!-- Button trigger modal --> */}
       <button
         type='button'
-        className='btn btn-primary'
+        className='btn btn-success'
         data-toggle='modal'
         data-target='#exampleModal'
         onClick={getCandidates}

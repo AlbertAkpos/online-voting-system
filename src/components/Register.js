@@ -9,10 +9,10 @@ import {
 } from "react-toasts";
 import PropTypes from "prop-types";
 import { getVoters, addVoter } from "../actions/voterActions";
-import { Redirect } from "react-router-dom";
 
 const Register = ({ voter: { voters, loading }, getVoters, addVoter }) => {
   const [name, setName] = useState("");
+  const [voterID, setVoterID] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isAdmin, setIsAdmin] = useState(false);
@@ -23,44 +23,54 @@ const Register = ({ voter: { voters, loading }, getVoters, addVoter }) => {
     // eslint-disable-next-line
   }, []);
 
-  if (loading || voters === null) {
-    return <h2>Its Loading...</h2>;
-  }
-
   if (toDashboard) {
-    return (
-      <Redirect
-        to={{
-          pathname: "/dashboard",
-          state: { name, email, password, isAdmin, voted }
-        }}
-      />
-    );
+    ToastsStore.success("Registration successful. Please login");
   }
   const onSubmit = e => {
     e.preventDefault();
-    if (name === "" || email === "" || password === "") {
+    if (voterID === "" || name === "" || email === "" || password === "") {
       ToastsStore.error("Please fill in all fields");
     } else {
-      let find = voters.find(x => x.name === name);
+      let find = voters.find(x => x.id == voterID);
       if (find) {
-        ToastsStore.warning("name or email already exist");
+        if (find.name) {
+          ToastsStore.warning("User already exist");
+        } else {
+          addVoter({
+            name,
+            email,
+            password,
+            isAdmin,
+            voted,
+            id: voterID
+          });
+          setEmail("");
+          setName("");
+          setPassword("");
+          setVoterID("");
+          setToDashboard(true);
+        }
       } else {
-        addVoter({
-          name,
-          email,
-          password,
-          isAdmin,
-          voted
-        });
-        setToDashboard(true);
+        ToastsStore.warning("Voter's ID invalid");
       }
     }
   };
 
   return (
     <>
+      <h3>Register</h3>
       <Form onSubmit={onSubmit}>
+        <Form.Group controlId='formBasicFirstName1'>
+          <Form.Label>Voter's ID</Form.Label>
+          <Form.Control
+            type='text'
+            name='name'
+            value={voterID}
+            placeholder='Enter Voter ID'
+            onChange={e => setVoterID(e.target.value.toUpperCase())}
+          />
+        </Form.Group>
+
         <Form.Group controlId='formBasicFirstName'>
           <Form.Label>Full name</Form.Label>
           <Form.Control
@@ -95,7 +105,7 @@ const Register = ({ voter: { voters, loading }, getVoters, addVoter }) => {
             onChange={e => setPassword(e.target.value)}
           />
         </Form.Group>
-        <Button variant='primary' type='submit'>
+        <Button type='submit' className='bg-success'>
           Register
         </Button>
       </Form>
